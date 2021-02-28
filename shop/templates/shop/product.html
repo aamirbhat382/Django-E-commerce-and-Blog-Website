@@ -1,0 +1,25 @@
+{% extends 'shop/basic.html' %}
+{%block css%}
+
+{%endblock%}
+{%block body%}
+<div class="container my-3">
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="{{product.image}}" class="img-fluid p-1" alt="{{product.name}}">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{product.name}}</h5>
+                    <p class="card-text">{{product.description}}</p>
+                    <button class="btn btn-success"> ₹ {{product.price}}</button>
+                    <button class="btn btn-success"><i class="bi bi-cart-plus"></i> Add To Cart</button>
+                    <p class="card-text"><small class="text-muted">Last updated {{product.pub_date}}</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock%}

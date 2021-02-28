@@ -1,0 +1,129 @@
+{% extends 'shop/basic.html' %}
+{% load static %}
+
+
+{%block body%}
+<div class="container">
+  <div id="checkout">
+    <h1 class="mx-auto my-1">Cart</h1>
+    <div class="table-responsive">
+      <table class="table table-success table-striped mb-0">
+        <thead>
+          <th>S.no</th>
+          <th>Name</th>
+          <th>Items</th>
+          <th>Price</th>
+          <th>Totel</th>
+        </thead>
+        <tbody id='tbodys'>
+        </tbody>
+      </table>
+    </div>
+    <ul class="list-group mt-0 mb-3 ">
+      <li class=" bg-dark text-light list-group-item d-flex justify-content-between align-items-center">
+        Totel
+        <span class="badge bg-success rounded-pill" id="totelOfItems">0</span>
+      </li>
+    </ul>
+    <div class="col-md-7 col-lg-8">
+      <h4 class="mb-3">Billing address</h4>
+      <form class="needs-validation" method="POST" action="/shop/cart/" novalidate>
+        {% csrf_token %}
+        <input type="hidden" id="items_json" name="items_json">
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <label for="firstName" class="form-label">First name</label>
+            <input type="text" class="form-control" id="firstName" name="name" placeholder="Name" value="" required>
+            <div class="invalid-feedback">
+              Valid first name is required.
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <label for="username" class="form-label">Email</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text">@</span>
+              <input type="email" class="form-control" name='email' id="email" placeholder="Email" required>
+              <div class="invalid-feedback">
+                Your Email is required.
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="address" class="form-label">Phone</label>
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone" required>
+            <div class="invalid-feedback">
+              Please Enter Your Phone Number
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="1234 Main St" required>
+            <div class="invalid-feedback">
+              Please enter your shipping address.
+            </div>
+          </div>
+
+          <div class="col-12">
+            <label for="address2" class="form-label">Address 2 <span class="text-muted">(Optional)</span></label>
+            <input type="text" class="form-control" id="address2" name="adress2" placeholder="Apartment or suite">
+          </div>
+
+          <div class="col-md-5">
+            <label for="zip" class="form-label">Country</label>
+            <input type="text" class="form-control" id="zip" name="country" placeholder="" required>
+            <div class="invalid-feedback">
+              Country code required.
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <label for="zip" class="form-label">State</label>
+            <input type="text" class="form-control" id="zip" name="state" placeholder="" required>
+            <div class="invalid-feedback">
+              State code required.
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <label for="zip" class="form-label">Zip</label>
+            <input type="text" class="form-control" id="zip" name="zip" placeholder="" required>
+            <div class="invalid-feedback">
+              Zip code required.
+            </div>
+          </div>
+        </div>
+        <hr class="my-4">
+        <button class="w-100 btn btn-primary btn-lg" type="submit" id="sbtn">Continue to checkout</button>
+      </form>
+    </div>
+  </div>
+  <ul class="list-group my-3" id="orderPlaced">
+  </ul>
+  {%if Thank%}
+  <script>
+    document.getElementById('orderPlaced').innerHTML = `
+    <div class="alert alert-success" role="alert">
+  A simple success alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+    <li class="list-group-item list-group-item-dark">OrderPlaced : {{orderId}} </li>`
+    localStorage.clear()
+  </script>
+  {%endif%}
+  {%block script%}
+  <script>
+    const CartCheck = localStorage.getItem('Cart')
+    if (CartCheck == null || CartCheck == undefined) {
+      document.getElementById('checkout').innerHTML = ` <div class="d-flex justify-content-center align-items-center h-100 p-5  my-3 bg-light  ">
+    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+      <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+    </svg>
+    <h1 class="text-success">You Cart is Blank</h1>
+  </div>`
+    }
+  </script>
+
+
+  <script src="{% static 'shop/js/cart.js' %}"></script>
+  {%endblock%}
+  {%endblock%}
